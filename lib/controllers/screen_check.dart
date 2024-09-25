@@ -12,7 +12,7 @@ class ScreenCheck extends StatelessWidget {
         if (screensize.maxWidth >= 600) {
           return const Home();
         } else {
-          return const mobile_sigin();
+          return const MobileSigin();
         }
       },
     );

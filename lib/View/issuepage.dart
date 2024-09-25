@@ -125,6 +125,8 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/home.dart';
+import 'package:haca_review_main/View/logout.dart';
+import 'package:haca_review_main/widgets/diloge_builder.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class IssuePage extends StatefulWidget {
@@ -133,7 +135,7 @@ class IssuePage extends StatefulWidget {
 }
 
 class _IssuePageState extends State<IssuePage> {
-  String _selectedButton = '';
+  String _selectedButton = 'My Issues';
   Color defaultColor = Colors.black;
   Color selectedColor = Colors.blue;
   @override
@@ -153,6 +155,7 @@ class _IssuePageState extends State<IssuePage> {
     double aspectRatio = screenWidth < 600 ? 8 / 4.6 : 12 / 5;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Image.asset("asset/images/haca.png"),
         centerTitle: true,
@@ -168,6 +171,7 @@ class _IssuePageState extends State<IssuePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+                        color: Colors.white,
                         height: screenHeight * 0.1,
                         width: screenWidth * 0.5,
                         child: Row(
@@ -184,11 +188,13 @@ class _IssuePageState extends State<IssuePage> {
                                 ),
                               ),
                               onTap: () {
+                                setState(() {
+                                  _selectedButton = 'Home';
+                                });
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ));
+                                        builder: (context) => Home()));
                               },
                             ),
                             InkWell(
@@ -205,11 +211,6 @@ class _IssuePageState extends State<IssuePage> {
                                 setState(() {
                                   _selectedButton = 'My Issues';
                                 });
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => IssuePage()));
                               },
                             ),
                             InkWell(
@@ -226,6 +227,7 @@ class _IssuePageState extends State<IssuePage> {
                                 setState(() {
                                   _selectedButton = 'Log Out';
                                 });
+                                dialogBuilder(context);
                               },
                             ),
                           ],
@@ -233,24 +235,87 @@ class _IssuePageState extends State<IssuePage> {
                       ),
                     ],
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: PopupMenuButton<String>(
-                          icon: Icon(Icons.menu, size: 35),
+                : Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'Welcome,',
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'student',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Menu icon aligned to the right
+                        PopupMenuButton<String>(
+                          icon: const Icon(Icons.menu, size: 35),
                           onSelected: (String value) {
                             if (value == 'Home') {
-                              // Navigate to Home
-                            } else if (value == 'My Issues') {
-                              //show my issues
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()));
+                            } else if (value == 'Myissue') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => IssuePage()));
                             } else if (value == 'Logout') {
-                              // Perform logout
+                              Future<void> _dialogBuilder(
+                                  BuildContext context) {
+                                return showDialog<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Log Out'),
+                                      content: const Text(
+                                        'Are you sure you want to log out?',
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          child: const Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          child: const Text('Log Out'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             }
                           },
                           itemBuilder: (BuildContext context) {
-                            return {'Home', 'My Issues', 'Logout'}
+                            return {'Home', 'Myissue', 'Logout'}
                                 .map((String choice) {
                               return PopupMenuItem<String>(
                                 value: choice,
@@ -259,8 +324,8 @@ class _IssuePageState extends State<IssuePage> {
                             }).toList();
                           },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
             Text(
               'Welcome,',
