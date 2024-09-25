@@ -6,7 +6,6 @@ import 'package:haca_review_main/controllers/provider/tabar_provider.dart';
 import 'package:haca_review_main/controllers/provider/user_issue_provider.dart';
 import 'package:haca_review_main/mobile/view/mobile_signup.dart';
 import 'package:haca_review_main/mobile/view/respopnsive_view/responsive_signup.dart';
-
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/models/classIssueData.dart';
 
