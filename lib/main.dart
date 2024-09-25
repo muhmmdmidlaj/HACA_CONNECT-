@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:haca_review_main/View/sigin.dart';
+import 'package:haca_review_main/mobile/view/mobile_sigin.dart';
 import 'package:provider/provider.dart';
-import 'package:haca_review_main/controllers/screen_check.dart';
 import 'package:haca_review_main/models/classIssueData.dart';
 
 // import 'package:haca_review_main/View/sigin.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ScreenCheck(),
+      home: Sigin(),
     );
   }
 }

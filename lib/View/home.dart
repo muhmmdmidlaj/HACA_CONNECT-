@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/issuepage.dart';
+import 'package:haca_review_main/admin/homeres.dart';
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/models/classIssueData.dart';
 import 'package:haca_review_main/View/myIssues.dart';
@@ -98,6 +99,10 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           setState(() {
                             _selectedButton = 'Log Out';
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Adminpage()));
                           });
                         },
                       ),
