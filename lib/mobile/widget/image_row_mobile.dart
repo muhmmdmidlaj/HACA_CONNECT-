@@ -11,31 +11,22 @@ class ImageRowphone {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Image.asset(
-              'asset/images/coding.png',
-              width: imageWidth,
-              height: imageHeight,
-            ),
+          Image.asset(
+            'asset/images/coding.png',
+            width: imageWidth,
+            height: imageHeight,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Image.asset(
-              'asset/images/design.png',
-              width: imageWidth,
-              height: imageHeight,
-            ),
+          Image.asset(
+            'asset/images/design.png',
+            width: imageWidth,
+            height: imageHeight,
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Image.asset(
-              'asset/images/marketing.png',
-              width: imageWidth,
-              height: imageHeight,
-            ),
+          Image.asset(
+            'asset/images/marketing.png',
+            width: imageWidth,
+            height: imageHeight,
           ),
         ],
       ),
