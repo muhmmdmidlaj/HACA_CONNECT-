@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/models/classIssueData.dart';
@@ -23,6 +22,7 @@ class MyIssues extends StatelessWidget {
   Widget build(BuildContext context) {
     final issueData = Provider.of<IssueData>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const CustomAppBar(),
       body: Column(
         children: [
