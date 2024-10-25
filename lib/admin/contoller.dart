@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StatusProvider with ChangeNotifier {
+class StatusProvider extends ChangeNotifier {
   final List<String> statuses = ['Resolved', 'Ongoing', 'Pending'];
   final List<String> _selectedStatuses = List<String>.filled(50, 'Resolved');
 

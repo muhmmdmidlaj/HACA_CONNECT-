@@ -16,47 +16,41 @@ class Adminpage extends StatelessWidget {
           builder: (context, constraints) {
             final bool isSmallScreen = constraints.maxWidth <= 600;
 
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'Asset/Screenshot 2024-07-15 111907 3[1].png'),
-                          fit: BoxFit.cover,
-                        ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('asset/images/haca.png'),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  Padding(
+                ),
+                Expanded(
+                  child: Padding(
                     padding: EdgeInsets.only(
                         left: isSmallScreen ? 0 : 40,
                         right: isSmallScreen ? 0 : 40),
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
-                      height: isSmallScreen
-                          ? 890
-                          : 535, // Adjust height for small screens
+                      // Adjust height for small screens
                       width: double.infinity, // Full width for all screen sizes
 
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: isSmallScreen
-                            ? _buildMobileLayout(context)
-                            : _buildPcLayout(context),
-                      ),
+                      child: isSmallScreen
+                          ? _buildMobileLayout(context)
+                          : _buildPcLayout(context),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),
@@ -86,7 +80,7 @@ class Adminpage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 100),
+            const SizedBox(width: 100),
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: TextButton(
@@ -103,8 +97,8 @@ class Adminpage extends StatelessWidget {
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30, top: .1),
+        const Padding(
+          padding: EdgeInsets.only(left: 30, top: .1),
           child: Text(
             "Welcome,",
             style: TextStyle(
@@ -113,8 +107,8 @@ class Adminpage extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30),
+        const Padding(
+          padding: EdgeInsets.only(left: 30),
           child: Text(
             'Admin',
             style: TextStyle(
@@ -123,7 +117,7 @@ class Adminpage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Padding(
           padding: const EdgeInsets.only(left: 30),
           child: Text(
@@ -141,7 +135,7 @@ class Adminpage extends StatelessWidget {
             child: Consumer<StatusProvider>(
               builder: (context, statusProvider, child) {
                 return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     childAspectRatio: 1.5,
                     crossAxisSpacing: 16.0,
@@ -154,13 +148,13 @@ class Adminpage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Issuedetails(),
+                            builder: (context) => const Issuedetails(),
                           ),
                         );
                       },
                       child: Card(
                         child: Padding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
@@ -181,17 +175,16 @@ class Adminpage extends StatelessWidget {
                                                     const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Issue ${index + 1}:',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 15,
                                                     color: Colors.grey,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            Expanded(
+                                            const Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Lorem Ipsum',
                                                   style: TextStyle(
@@ -203,12 +196,11 @@ class Adminpage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                        const Row(
                                           children: [
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Student Name:',
                                                   style: TextStyle(
@@ -220,8 +212,7 @@ class Adminpage extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Lorem Ipsum',
                                                   style: TextStyle(
@@ -233,12 +224,11 @@ class Adminpage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                        const Row(
                                           children: [
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Category:',
                                                   style: TextStyle(
@@ -250,8 +240,7 @@ class Adminpage extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Lorem Ipsum Lorem',
                                                   style: TextStyle(
@@ -263,12 +252,11 @@ class Adminpage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                        const Row(
                                           children: [
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   overflow: TextOverflow.fade,
                                                   'Date:',
@@ -281,8 +269,7 @@ class Adminpage extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   '15 July 2024',
                                                   overflow: TextOverflow.fade,
@@ -297,10 +284,9 @@ class Adminpage extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            Expanded(
+                                            const Expanded(
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Text(
                                                   'Status:',
                                                   style: TextStyle(
@@ -340,7 +326,8 @@ class Adminpage extends StatelessWidget {
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(3),
-                                                          underline: SizedBox(),
+                                                          underline:
+                                                              const SizedBox(),
                                                           value: statusProvider
                                                                   .selectedStatuses[
                                                               index],
@@ -423,8 +410,8 @@ class Adminpage extends StatelessWidget {
       children: [
         Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 30, top: .1),
+            const Padding(
+              padding: EdgeInsets.only(left: 30, top: .1),
               child: Text(
                 "Welcome,",
                 style: TextStyle(
@@ -433,11 +420,11 @@ class Adminpage extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 5),
               child: PopupMenuButton<String>(
-                icon: Icon(Icons.menu, size: 35),
+                icon: const Icon(Icons.menu, size: 35),
                 onSelected: (String value) {
                   if (value == 'Home') {
                     // Navigate to Home
@@ -457,8 +444,8 @@ class Adminpage extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30),
+        const Padding(
+          padding: EdgeInsets.only(left: 30),
           child: Text(
             'Admin',
             style: TextStyle(
@@ -467,7 +454,7 @@ class Adminpage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 25),
         Padding(
           padding: const EdgeInsets.only(left: 30),
           child: Text(
@@ -480,32 +467,34 @@ class Adminpage extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Consumer<StatusProvider>(
-              builder: (context, statusProvider, child) {
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1, // Single column for mobile
-                    childAspectRatio: 1.5,
-                    crossAxisSpacing: 16.0,
-                    mainAxisSpacing: 16.0,
-                  ),
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Issuedetails(),
-                          ),
-                        );
-                      },
+          flex: 2,
+          child: Consumer<StatusProvider>(
+            builder: (context, statusProvider, child) {
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, // Single column for mobile
+                  childAspectRatio: 8 / 4.6,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                ),
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Issuedetails(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: SingleChildScrollView(
+                        elevation: 5,
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: Column(
                               children: [
                                 Padding(
@@ -523,17 +512,16 @@ class Adminpage extends StatelessWidget {
                                                   const EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Issue ${index + 1}:',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.grey,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          Expanded(
+                                          const Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Lorem Ipsum',
                                                 style: TextStyle(
@@ -545,12 +533,11 @@ class Adminpage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Row(
+                                      const Row(
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Student Name:',
                                                 style: TextStyle(
@@ -562,8 +549,7 @@ class Adminpage extends StatelessWidget {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Lorem Ipsum',
                                                 style: TextStyle(
@@ -575,12 +561,11 @@ class Adminpage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Row(
+                                      const Row(
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Category:',
                                                 style: TextStyle(
@@ -592,8 +577,7 @@ class Adminpage extends StatelessWidget {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Lorem Ipsum Lorem',
                                                 style: TextStyle(
@@ -605,12 +589,11 @@ class Adminpage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Row(
+                                      const Row(
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 overflow: TextOverflow.fade,
                                                 'Date:',
@@ -623,8 +606,7 @@ class Adminpage extends StatelessWidget {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 '15 July 2024',
                                                 overflow: TextOverflow.fade,
@@ -639,10 +621,9 @@ class Adminpage extends StatelessWidget {
                                       ),
                                       Row(
                                         children: [
-                                          Expanded(
+                                          const Expanded(
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Status:',
                                                 style: TextStyle(
@@ -679,7 +660,8 @@ class Adminpage extends StatelessWidget {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(3),
-                                                        underline: SizedBox(),
+                                                        underline:
+                                                            const SizedBox(),
                                                         value: statusProvider
                                                                 .selectedStatuses[
                                                             index],
@@ -742,16 +724,13 @@ class Adminpage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              },
-            ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
-        SizedBox(
-          height: 100,
-        )
       ],
     );
   }

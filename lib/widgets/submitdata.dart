@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:haca_review_main/models/classIssueData.dart';
+import 'package:haca_review_main/controllers/provider/classIssueData.dart';
 
 class Submitdata extends StatelessWidget {
   const Submitdata({super.key});
@@ -34,7 +34,7 @@ class Submitdata extends StatelessWidget {
               Text('Category: ${issueData.category}',
                   style: const TextStyle(fontSize: 18, color: Colors.white)),
               const SizedBox(height: 5),
-              Text('Urgency: ${issueData.urgency}',
+              Text('Urgency: ${issueData.school}',
                   style: const TextStyle(fontSize: 18, color: Colors.white)),
             ],
           ),

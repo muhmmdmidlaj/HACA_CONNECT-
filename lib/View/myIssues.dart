@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:haca_review_main/models/classIssueData.dart';
+import 'package:haca_review_main/controllers/provider/classIssueData.dart';
 import 'package:haca_review_main/widgets/appbar.dart';
 
 class MyIssues extends StatelessWidget {
@@ -54,7 +54,7 @@ class MyIssues extends StatelessWidget {
                         style:
                             const TextStyle(fontSize: 18, color: Colors.white)),
                     const SizedBox(height: 5),
-                    Text('Urgency: ${issueData.urgency}',
+                    Text('School: ${issueData.school}',
                         style:
                             const TextStyle(fontSize: 18, color: Colors.white)),
                   ],

@@ -13,36 +13,34 @@ class Issuedetails extends StatelessWidget {
           builder: (context, constraints) {
             final bool isSmallScreen = constraints.maxWidth < 600;
 
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'Asset/Screenshot 2024-07-15 111907 3[1].png',
-                          ),
-                          fit: BoxFit.cover,
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'asset/images/haca.png',
                         ),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  Padding(
+                ),
+                Expanded(
+                  child: Padding(
                     padding: EdgeInsets.only(
                         left: isSmallScreen ? 0 : 40,
                         right: isSmallScreen ? 0 : 40),
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
-                      height: isSmallScreen
-                          ? 890
-                          : 535, // Adjust height for small screens
+                      // Adjust height for small screens
                       width: double.infinity, // Full width for all screen sizes
 
                       child: Padding(
@@ -53,8 +51,8 @@ class Issuedetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),
@@ -69,8 +67,8 @@ class Issuedetails extends StatelessWidget {
       children: [
         Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
+            const Padding(
+              padding: EdgeInsets.only(left: 16),
               child: Text(
                 'Welcome,',
                 style: TextStyle(
@@ -79,12 +77,12 @@ class Issuedetails extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               height: 50,
               width: 50,
               child: PopupMenuButton<String>(
-                icon: Icon(Icons.menu, size: 30),
+                icon: const Icon(Icons.menu, size: 30),
                 onSelected: (String value) {
                   if (value == 'Home') {
                     // Navigate to Home
@@ -98,7 +96,7 @@ class Issuedetails extends StatelessWidget {
                       value: choice,
                       child: Text(
                         choice,
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     );
                   }).toList();
@@ -107,8 +105,8 @@ class Issuedetails extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16),
           child: Text(
             'Admin',
             style: TextStyle(
@@ -117,7 +115,7 @@ class Issuedetails extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Text(
@@ -129,8 +127,8 @@ class Issuedetails extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 10),
+        const Padding(
+          padding: EdgeInsets.only(left: 16, top: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -139,7 +137,7 @@ class Issuedetails extends StatelessWidget {
                 style: TextStyle(fontSize: 12),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -161,8 +159,8 @@ class Issuedetails extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16),
           child: Row(
             children: [
               Text(
@@ -184,44 +182,52 @@ class Issuedetails extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
           child: Container(
-            height: 450,
-            width: 500,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
               border: Border.all(color: Colors.black, width: .5),
             ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-                style: TextStyle(fontSize: 14),
+            child: const SingleChildScrollView(
+              padding: EdgeInsets.all(8),
+              child: Padding(
+                padding: EdgeInsets.all(18.0),
+                child: Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 8, left: 16, right: 16),
-          child: GestureDetector(
-            onTap: () {
-              // Add your onTap functionality here
-            },
-            child: Container(
-              height: 30,
-              width: 505,
-              decoration: BoxDecoration(
-                color: HexColor('#015AFF'),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Center(
-                child: Text(
-                  'Communicate',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    // Add your onTap functionality here
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 505,
+                    decoration: BoxDecoration(
+                      color: HexColor('#015AFF'),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Communicate',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ],
@@ -267,8 +273,8 @@ class Issuedetails extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30),
+        const Padding(
+          padding: EdgeInsets.only(left: 30),
           child: Text(
             'Welcome,',
             style: TextStyle(
@@ -277,8 +283,8 @@ class Issuedetails extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30),
+        const Padding(
+          padding: EdgeInsets.only(left: 30),
           child: Text(
             'Admin',
             style: TextStyle(
@@ -287,7 +293,7 @@ class Issuedetails extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 30),
           child: Text(
@@ -299,8 +305,8 @@ class Issuedetails extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 50, top: 20),
+        const Padding(
+          padding: EdgeInsets.only(left: 50, top: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -309,7 +315,7 @@ class Issuedetails extends StatelessWidget {
                 style: TextStyle(fontSize: 13),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(left: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -331,8 +337,8 @@ class Issuedetails extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 50),
+        const Padding(
+          padding: EdgeInsets.only(left: 50),
           child: Row(
             children: [
               Text(
@@ -356,8 +362,8 @@ class Issuedetails extends StatelessWidget {
               borderRadius: BorderRadius.circular(7),
               border: Border.all(color: Colors.black, width: .5),
             ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+            child: const SingleChildScrollView(
+              padding: EdgeInsets.all(16),
               child: Text(
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
                 style: TextStyle(fontSize: 15),
@@ -378,7 +384,7 @@ class Issuedetails extends StatelessWidget {
                 color: HexColor('#015AFF'),
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Communicate',
                   style: TextStyle(
