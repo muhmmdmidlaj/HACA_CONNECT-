@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                    const IssuePage()));
+                                                      const IssuePage()));
                                         },
                                       ),
                                       InkWell(
@@ -429,9 +429,8 @@ class _HomeState extends State<Home> {
                                           text: "Issue raised successfully!",
                                           onConfirmBtnTap: () {
                                             // Close the alert and clear the form fields
-                                            Navigator.pop(
-                                                context); // Dismiss the alert
-                                            Navigator.pushReplacement(
+                                            // Dismiss the alert
+                                            Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
@@ -455,7 +454,7 @@ class _HomeState extends State<Home> {
                                         );
                                         Future.delayed(Duration(seconds: 3),
                                             () {
-                                          Navigator.pushReplacement(
+                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>

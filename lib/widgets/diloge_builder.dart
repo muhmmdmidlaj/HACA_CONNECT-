@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haca_review_main/View/sigin.dart';
+import 'package:haca_review_main/controllers/provider/logout.dart';
 
 Future<void> dialogBuilder(BuildContext context) {
   return showDialog<void>(
@@ -24,8 +26,18 @@ Future<void> dialogBuilder(BuildContext context) {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: const Text('Log Out'),
-            onPressed: () {
-              Navigator.of(context).pop();
+            onPressed: () async {
+              await clearTokens();
+
+              if (context.mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Sigin(),
+                  ),
+                  (route) => false, 
+                );
+              }
             },
           ),
         ],

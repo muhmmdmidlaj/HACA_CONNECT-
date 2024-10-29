@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +17,54 @@ import 'package:haca_review_main/widgets/textField.dart';
 import 'package:provider/provider.dart';
 import 'dart:html' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:app_links/app_links.dart';
 
-class Sigin extends StatelessWidget {
+class Sigin extends StatefulWidget {
   const Sigin({super.key});
+
+  @override
+  State<Sigin> createState() => _SiginState();
+}
+
+class _SiginState extends State<Sigin> {
+  final _appLinks = AppLinks(); // Create an instance of AppLinks
+  StreamSubscription<Uri>? _sub;
+
+  void initState() {
+    super.initState();
+    _handleIncomingLinks(); // Start listening for deep link redirects
+  }
+
+  // Listen for incoming deep links
+  void _handleIncomingLinks() {
+    _sub = _appLinks.uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        // Extract tokens from the deep link URI
+        String? accessToken = uri.queryParameters['accessToken'];
+        String? refreshToken = uri.queryParameters['refreshToken'];
+
+        if (accessToken != null && refreshToken != null) {
+          // Store tokens and navigate to home screen
+          print("Access Token: $accessToken");
+          print("Refresh Token: $refreshToken");
+
+          // Navigate to home page after successful login
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Home()),
+          );
+        }
+      }
+    }, onError: (err) {
+      print("Error listening for deep links: $err");
+    });
+  }
+
+  // Dispose the subscription when no longer needed
+  @override
+  void dispose() {
+    _sub?.cancel(); // Clean up the subscription
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +154,7 @@ class Sigin extends StatelessWidget {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Adminpage(),
+                                                          AdminPage(),
                                                     ));
                                               },
                                               child: Text(
@@ -180,7 +227,7 @@ class Sigin extends StatelessWidget {
                                                           context,
                                                           MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const Adminpage(), // Your AdminDashboard widget
+                                                                const AdminPage(), // Your AdminDashboard widget
                                                           ),
                                                         );
                                                       },
@@ -197,7 +244,7 @@ class Sigin extends StatelessWidget {
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const Adminpage(),
+                                                              const AdminPage(),
                                                         ),
                                                       );
                                                     });
@@ -288,16 +335,30 @@ class Sigin extends StatelessWidget {
                                       // }
 
                                       // Use html.window.open for Flutter web
-                                      if (kIsWeb) {
-                                        // Use html.window.open for Flutter web
-                                        const url =
-                                            'http://localhost:3000/auth/google';
-                                        html.window.open(url,
-                                            "_self"); // Opens in the same tab
+                                      // if (kIsWeb) {
+                                      //   // Use html.window.open for Flutter web
+                                      //   const url =
+                                      //       'http://localhost:3000/auth/google';
+                                      //   html.window.open(url,
+                                      //       "_self"); // Opens in the same tab
+                                      // } else {
+                                      //   // Handle for mobile or desktop if needed
+                                      //   print(
+                                      //       'This functionality is only for web.');
+                                      // }
+
+                                      // Open Google sign-in page in the external browser
+                                      const googleAuthUrl =
+                                          'http://localhost:3000/auth/google';
+
+                                      // Check if URL can be launched
+                                      if (await canLaunchUrl(
+                                          Uri.parse(googleAuthUrl))) {
+                                        await launchUrl(
+                                            Uri.parse(googleAuthUrl));
                                       } else {
-                                        // Handle for mobile or desktop if needed
                                         print(
-                                            'This functionality is only for web.');
+                                            "Could not launch $googleAuthUrl");
                                       }
                                     },
                                     text: 'Sign in with Google',
@@ -383,3 +444,5 @@ class Sigin extends StatelessWidget {
     );
   }
 }
+
+class HomePage {}

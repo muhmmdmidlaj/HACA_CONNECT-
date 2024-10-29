@@ -34,25 +34,32 @@ class AuthProvider with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Success
         final responseData = jsonDecode(response.body);
+        print('Response Data: $responseData');
 
-        // Extract tokens from response (assuming the API returns tokens like this)
-        String accessToken = responseData['accessToken'];
-        String refreshToken = responseData['refreshToken'];
-        String role = responseData['role'];  // Role is added to the response
+        String? accessToken = responseData['accessToken'];
+        String? refreshToken = responseData['refreshToken'];
+        String? role = responseData['role'];
+
+        // Null safety checks for essential fields
+        if (accessToken == null || refreshToken == null || role == null) {
+          return 'Failed to retrieve required data from server';
+        }
 
         // Store tokens and role using SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', accessToken);
         await prefs.setString('refreshToken', refreshToken);
-        await prefs.setString('role', role);  // Store the role
+        await prefs.setString('role', role); // Store the role
 
         return null; // Return null to indicate success
       } else {
-        // Return the error message
+        // Log and return error
+        print('Error: ${response.statusCode}, Response: ${response.body}');
         return 'Failed to sign up: ${response.body}';
       }
     } catch (error) {
-      // Return a catch-all error message
+      // Catch and log any unexpected errors
+      print('Exception occurred: $error');
       return 'Error occurred: $error';
     } finally {
       isLoading = false;
@@ -85,13 +92,13 @@ class AuthProvider with ChangeNotifier {
         // Extract tokens from response
         String accessToken = responseData['accessToken'];
         String refreshToken = responseData['refreshToken'];
-        String role = responseData['role'];  // Get role from login response
+        String role = responseData['role']; // Get role from login response
 
         // Store tokens and role using SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', accessToken);
         await prefs.setString('refreshToken', refreshToken);
-        await prefs.setString('role', role);  // Store the role
+        await prefs.setString('role', role); // Store the role
 
         return null; // Return null to indicate success
       } else {
@@ -130,7 +137,7 @@ class AuthProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('accessToken');
     await prefs.remove('refreshToken');
-    await prefs.remove('role');  // Clear the role
+    await prefs.remove('role'); // Clear the role
   }
 
   // Method to check if the user is signed up or logged in based on access token

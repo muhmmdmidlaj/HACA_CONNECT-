@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/home.dart';
 import 'package:haca_review_main/View/sigin.dart';
-import 'package:haca_review_main/admin/contoller.dart';
 import 'package:haca_review_main/admin/homeres.dart';
+import 'package:haca_review_main/controllers/provider/admin_issue_provider.dart';
 import 'package:haca_review_main/controllers/provider/login_provider.dart';
 import 'package:haca_review_main/controllers/provider/signup_provider.dart';
 import 'package:haca_review_main/controllers/provider/tabar_provider.dart';
+import 'package:haca_review_main/controllers/provider/user_issue_get_provider.dart';
 import 'package:haca_review_main/controllers/provider/user_issue_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/controllers/provider/classIssueData.dart';
@@ -34,13 +35,16 @@ class MyApp extends StatelessWidget {
             create: (context) => TabProvider(),
           ),
           ChangeNotifierProvider(
-            create: (context) => StatusProvider(),
-          ),
-          ChangeNotifierProvider(
             create: (context) => LoginProvider(),
           ),
           ChangeNotifierProvider(
             create: (context) => AuthProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => AdminIssueProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => UserIssueGetProvider(),
           ),
         ],
         child: MaterialApp(
@@ -82,7 +86,7 @@ class InitialScreen extends StatelessWidget {
                     String? role = roleSnapshot.data;
                     if (role == 'admin') {
                       // If user is admin, show Admin page
-                      return const Adminpage(); // Replace with your Admin page widget
+                      return const AdminPage(); // Replace with your Admin page widget
                     } else if (role == 'student') {
                       // If user is a student, show Home page (or student dashboard)
                       return const Home(); // Replace with your Student Home page widget

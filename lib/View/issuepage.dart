@@ -125,7 +125,11 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/home.dart';
+import 'package:haca_review_main/controllers/provider/user_issue_get_provider.dart';
+import 'package:haca_review_main/models/user_issue_get_model.dart';
 import 'package:haca_review_main/widgets/diloge_builder.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class IssuePage extends StatefulWidget {
   const IssuePage({super.key});
@@ -138,6 +142,17 @@ class _IssuePageState extends State<IssuePage> {
   String _selectedButton = 'My Issues';
   Color defaultColor = Colors.black;
   Color selectedColor = Colors.blue;
+
+  late Future<List<UserIssue>> futureIssues;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the data when the screen initializes
+    futureIssues = Provider.of<UserIssueGetProvider>(context, listen: false)
+        .fetchUserIssues();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Fetch screen width and height using MediaQuery
@@ -152,7 +167,7 @@ class _IssuePageState extends State<IssuePage> {
     double subtitleFontSize = screenWidth < 600 ? 18 : 24;
     double cardPadding = screenWidth < 600 ? 20 : 16;
     double gridSpacing = screenWidth < 600 ? 8 : 16;
-    double aspectRatio = screenWidth < 600 ? 8 / 4.6 : 12 / 5;
+    double aspectRatio = screenWidth < 600 ? 8 / 4.6 : 12 / 8;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -192,7 +207,8 @@ class _IssuePageState extends State<IssuePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Home()));
+                                    builder: (context) => Home(),
+                                  ));
                             },
                           ),
                           InkWell(
@@ -209,6 +225,11 @@ class _IssuePageState extends State<IssuePage> {
                               setState(() {
                                 _selectedButton = 'My Issues';
                               });
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const IssuePage()));
                             },
                           ),
                           InkWell(
@@ -359,24 +380,249 @@ class _IssuePageState extends State<IssuePage> {
           ),
           SizedBox(height: screenWidth < 600 ? 12 : 20),
           Expanded(
-            child: GridView.count(
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: gridSpacing,
-              mainAxisSpacing: gridSpacing,
-              childAspectRatio: aspectRatio,
-              children: List.generate(6, (index) {
-                return Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: IssueCard(
-                    status: index == 2
-                        ? 'Resolved'
-                        : index == 3
-                            ? 'Ongoing'
-                            : 'Pending',
-                    padding: cardPadding,
-                  ),
-                );
-              }),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 50.0),
+              child: FutureBuilder<List<UserIssue>>(
+                future: futureIssues,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Show loading indicator while data is being fetched
+                    return Center(child: CircularProgressIndicator());
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    // Show a message when there are no issues
+                    return Center(child: Text('No issues found.'));
+                  } else if (snapshot.hasError) {
+                    // Show error message if something goes wrong
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    // Data is successfully fetched
+                    List<UserIssue> issues = snapshot.data!;
+
+                    return GridView.count(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: gridSpacing,
+                      mainAxisSpacing: gridSpacing,
+                      childAspectRatio: aspectRatio,
+                      children: List.generate(issues.length, (index) {
+                        UserIssue issue = issues[index];
+                        String formattedDate =
+                            DateFormat('dd MMM yyyy').format(issue.createdAt);
+
+                        return Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth < 600 ? 6.0 : 8.0),
+                            ),
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: EdgeInsets.all(cardPadding),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Issue ${issue.indexno}:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  screenWidth < 600 ? 18 : 16,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.title,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  screenWidth < 600 ? 18 : 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Category:',
+                                            style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                    255, 171, 170, 170),
+                                                fontSize:
+                                                    screenWidth < 600 ? 16 : 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.category,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    screenWidth < 600 ? 16 : 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Date:',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  screenWidth < 600 ? 16 : 14,
+                                              color: const Color.fromARGB(
+                                                  255, 171, 170, 170),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            formattedDate,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: screenWidth < 600
+                                                    ? 16
+                                                    : 14),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Category:',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  screenWidth < 600 ? 16 : 14,
+                                              color: const Color.fromARGB(
+                                                  255, 171, 170, 170),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.category,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    screenWidth < 600 ? 16 : 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Status: ',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  screenWidth < 600 ? 16 : 14,
+                                              color: const Color.fromARGB(
+                                                  255, 171, 170, 170),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.status,
+                                            style: TextStyle(
+                                              color: issue.status == 'Pending'
+                                                  ? Colors.red
+                                                  : issue.status == 'Resolved'
+                                                      ? Colors.green
+                                                      : Colors.orange,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  screenWidth < 600 ? 12 : 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'School:',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  screenWidth < 600 ? 16 : 14,
+                                              color: const Color.fromARGB(
+                                                  255, 171, 170, 170),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.school,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: screenWidth < 600
+                                                    ? 16
+                                                    : 14),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Batch:',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  screenWidth < 600 ? 16 : 14,
+                                              color: const Color.fromARGB(
+                                                  255, 171, 170, 170),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            issue.batch,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: screenWidth < 600
+                                                    ? 16
+                                                    : 14),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: screenWidth < 600 ? 15 : 8),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ],
