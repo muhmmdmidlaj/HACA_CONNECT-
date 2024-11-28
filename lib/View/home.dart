@@ -1,13 +1,11 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/issuepage.dart';
-import 'package:haca_review_main/View/myIssues.dart';
 import 'package:haca_review_main/mobile/view/mobile_home.dart';
 import 'package:haca_review_main/widgets/diloge_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/controllers/provider/classIssueData.dart';
 import 'package:haca_review_main/widgets/appbar.dart';
-import 'dart:html' as html;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,16 +15,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
-    _handleRedirectAndNavigate();
-  }
-
   String _selectedButton = 'Home';
   Color defaultColor = Colors.black;
   Color selectedColor = Colors.blue;
-  String username = 'Shibili';
 
   // Controllers for form fields
   final TextEditingController _titleController = TextEditingController();
@@ -40,41 +31,8 @@ class _HomeState extends State<Home> {
   // Form key for validation
   final _formKey = GlobalKey<FormState>();
 
-  void _handleRedirectAndNavigate() async {
-    // Adding a delay to ensure that the URL is fully loaded
-    Future.delayed(Duration(milliseconds: 500), () {
-      Uri uri = Uri.parse(html.window.location.href);
-      String? accessToken = uri.queryParameters['accessToken'];
-      String? refreshToken = uri.queryParameters['refreshToken'];
-
-      // Debugging output
-      print('Full URL: ${html.window.location.href}');
-      print('Access Token: $accessToken');
-      print('Refresh Token: $refreshToken');
-
-      if (accessToken != null && refreshToken != null) {
-        // Store the tokens locally or use them for further requests
-        html.window.localStorage['accessToken'] = accessToken;
-        html.window.localStorage['refreshToken'] = refreshToken;
-
-        // Navigate to home page or other logic after successful login
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const Home(),
-          ));
-        });
-      } else {
-        print(
-            "Tokens not found. Redirect failed or user is not authenticated.");
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-//
-
-    //
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return LayoutBuilder(builder: (context, constraints) {
@@ -156,7 +114,7 @@ class _HomeState extends State<Home> {
                                           setState(() {
                                             _selectedButton = 'Log Out';
                                           });
-                                          dialogBuilder(context);
+                                          dialogCoolBuilder(context);
                                         },
                                       ),
                                     ],
@@ -180,13 +138,13 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             const SizedBox(height: 1),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 80),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 80),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  ' $username',
-                                  style: const TextStyle(
+                                  'Student',
+                                  style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -296,10 +254,10 @@ class _HomeState extends State<Home> {
                                           'Marketing School',
                                           'Design School',
                                           'Finance School'
-                                        ].map((urgency) {
+                                        ].map((school) {
                                           return DropdownMenuItem<String>(
-                                            value: urgency,
-                                            child: Text(urgency),
+                                            value: school,
+                                            child: Text(school),
                                           );
                                         }).toList(),
                                         onChanged: (value) {
@@ -343,10 +301,10 @@ class _HomeState extends State<Home> {
                                         items: [
                                           'Offline',
                                           'Online',
-                                        ].map((category) {
+                                        ].map((mode) {
                                           return DropdownMenuItem<String>(
-                                            value: category,
-                                            child: Text(category),
+                                            value: mode,
+                                            child: Text(mode),
                                           );
                                         }).toList(),
                                         onChanged: (value) {
@@ -411,12 +369,14 @@ class _HomeState extends State<Home> {
                                       Provider.of<IssueData>(context,
                                               listen: false)
                                           .setIssueData(
-                                        _titleController.text.toString(),
-                                        _descriptionController.text.toString(),
-                                        _selectedCategory ?? 'N/A',
-                                        _selectedSchool ?? 'N/A',
-                                        _selectedModeOfClass ?? 'N/A',
-                                        _batchController.text.toString(),
+                                        title: _titleController.text.toString(),
+                                        description: _descriptionController.text
+                                            .toString(),
+                                        category: _selectedCategory ?? 'N/A',
+                                        school: _selectedSchool ?? 'N/A',
+                                        modeOfClass:
+                                            _selectedModeOfClass ?? 'N/A',
+                                        batch: _batchController.text.toString(),
                                       );
                                       String? issueError =
                                           await issueProvider.raiseIssue();
@@ -424,6 +384,7 @@ class _HomeState extends State<Home> {
                                       if (issueError == null) {
                                         // If the issue is successfully raised, show success alert
                                         CoolAlert.show(
+                                          width: 200,
                                           context: context,
                                           type: CoolAlertType.success,
                                           text: "Issue raised successfully!",
@@ -450,10 +411,10 @@ class _HomeState extends State<Home> {
                                           },
                                           autoCloseDuration: const Duration(
                                               seconds:
-                                                  4), // Automatically close after 2 seconds
+                                                  2), // Automatically close after 2 seconds
                                         );
-                                        Future.delayed(Duration(seconds: 3),
-                                            () {
+                                        Future.delayed(
+                                            const Duration(seconds: 3), () {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -465,6 +426,7 @@ class _HomeState extends State<Home> {
                                       } else {
                                         // If there is an error, show an error alert
                                         CoolAlert.show(
+                                          width: 200,
                                           context: context,
                                           type: CoolAlertType.error,
                                           text: issueError,

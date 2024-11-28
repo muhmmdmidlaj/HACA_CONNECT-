@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/controllers/get_access_tocken.dart';
+import 'package:haca_review_main/models/base_url.dart';
 import 'package:haca_review_main/models/issue_get_model.dart';
-import 'package:haca_review_main/models/issue_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminIssueProvider with ChangeNotifier {
   // Base URL for the API
-  final String _baseUrl = 'http://192.168.1.211:3000/issue/allComplaints';
+  final String _baseUrl = '$baseUrlll/issue/allComplaints';
 
   // Internal list of complaints to keep track of fetched data
   List<Complaint> _complaints = [];
@@ -90,7 +90,7 @@ class AdminIssueProvider with ChangeNotifier {
       print(newStatus);
       print(accessToken);
 
-      final url = Uri.parse('http://192.168.1.211:3000/issue/changeStatus');
+      final url = Uri.parse('$baseUrlll/issue/changeStatus');
       final response = await http.patch(
         url,
         headers: {

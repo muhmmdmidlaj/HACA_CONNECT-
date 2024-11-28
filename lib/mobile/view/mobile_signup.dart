@@ -1,8 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/home.dart';
+import 'package:haca_review_main/View/sigin.dart';
 import 'package:haca_review_main/controllers/provider/signup_provider.dart';
 import 'package:haca_review_main/mobile/widget/image_row_mobile.dart';
-import 'package:haca_review_main/widgets/button.dart';
 import 'package:haca_review_main/widgets/textField.dart';
 import 'package:provider/provider.dart';
 import 'package:haca_review_main/models/siginup_model.dart'; // Import your UserModel
@@ -99,9 +100,23 @@ class _MobileSignupState extends State<MobileSignup> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width - 20,
-                            child: Mywidgets().mytextField(
+                            child: TextFormField(
                               controller: signupPrdr.passwordController,
-                              labelText: 'Password',
+                              obscureText: signupPrdr
+                                  .obscureText, // Controlled by provider
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                border: const OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    signupPrdr.obscureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: signupPrdr
+                                      .togglePasswordVisibility, // Toggle through provider
+                                ),
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';
@@ -118,9 +133,13 @@ class _MobileSignupState extends State<MobileSignup> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width - 20,
-                            child: Mywidgets().mytextField(
+                            child: TextFormField(
+                              obscureText: true,
                               controller: signupPrdr.conformPassController,
-                              labelText: 'Confirm Password',
+                              decoration: const InputDecoration(
+                                labelText: 'Confirm Password',
+                                border: OutlineInputBorder(),
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please confirm your password';
@@ -208,6 +227,31 @@ class _MobileSignupState extends State<MobileSignup> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Already have an account? ',
+                        style: const TextStyle(color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text: 'Sign-In',
+                            style: const TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Sigin()),
+                                );
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

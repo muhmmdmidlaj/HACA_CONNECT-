@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:haca_review_main/models/base_url.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> regenerateAccessToken() async {
-  final url = Uri.parse('http://192.168.1.211:3000/refresh-token');
+  final url = Uri.parse('$baseUrlll/refresh-token');
 
   try {
     // Retrieve the refresh token from SharedPreferences

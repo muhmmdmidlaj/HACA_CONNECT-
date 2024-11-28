@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:haca_review_main/models/base_url.dart';
 import 'package:haca_review_main/models/siginup_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
@@ -11,10 +12,19 @@ class AuthProvider with ChangeNotifier {
   TextEditingController conformPassController = TextEditingController();
 
   // Base URL for the API
-  final String _signupUrl = 'http://192.168.1.211:3000/signup';
-  final String _loginUrl = 'http://192.168.1.211:3000/login';
+  final String _signupUrl = '$baseUrlll/signup';
+  final String _loginUrl = '$baseUrlll/login';
 
   bool isLoading = false;
+
+    bool _obscureText = true;
+
+  bool get obscureText => _obscureText; // Getter for obscureText
+
+  void togglePasswordVisibility() {
+    _obscureText = !_obscureText;
+    notifyListeners();
+  }
 
   // Method to sign up a user
   Future<String?> signup(UserModel user) async {

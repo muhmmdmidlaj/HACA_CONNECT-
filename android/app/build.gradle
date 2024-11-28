@@ -1,12 +1,15 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
     namespace = "com.example.haca_review_main"
-    compileSdk = 33
+    compileSdk = 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17  // Ensure you're using Java 17
@@ -20,7 +23,7 @@ android {
     defaultConfig {
         applicationId = "com.example.haca_review_main"
         minSdk = 21  // Adjust this to match your app's minimum supported Android version
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1  // Set version code manually
         versionName = "1.0"  // Set version name manually
     }

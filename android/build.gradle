@@ -1,6 +1,12 @@
 buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Optional, but sometimes required for older dependencies
+    }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'  // Ensure proper plugin version
+        classpath 'com.android.tools.build:gradle:8.1.0'  // Ensure proper plugin version
     }
 }
 

@@ -1,13 +1,15 @@
 {
     "name": "haca_review_main",
-    "short_name": "haca_review_main",
-    "start_url": ".",
-    "display": "standalone",
+    "short_name": "haca_review",
+    "start_url": "/index.html",
+    "scope": "/",
+    "display": "fullscreen",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "lang": "en",
     "icons": [
         {
             "src": "icons/Icon-192.png",

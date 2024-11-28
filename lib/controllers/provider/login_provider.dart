@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haca_review_main/models/base_url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,12 +12,21 @@ class LoginProvider with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
+  bool _obscureText = true;
+
+  bool get obscureText => _obscureText; // Getter for obscureText
+
+  void togglePasswordVisibility() {
+    _obscureText = !_obscureText;
+    notifyListeners();
+  }
+
   // Login method to store access token, refresh token, and role in SharedPreferences
   Future<String?> login() async {
     _isLoading = true;
     notifyListeners();
 
-    final url = Uri.parse('http://192.168.1.211:3000/login');
+    final url = Uri.parse('$baseUrlll/login');
     final loginRequest = LoginRequest(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
@@ -36,20 +46,24 @@ class LoginProvider with ChangeNotifier {
         // Extract tokens and role from the response
         String accessToken = responseData['accessToken'];
         String refreshToken = responseData['refreshToken'];
-        String role = responseData['role'];  // New role field
+        String role = responseData['role']; // New role field
 
         // Store tokens and role using SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', accessToken);
         await prefs.setString('refreshToken', refreshToken);
-        await prefs.setString('role', role);  // Store role
+        await prefs.setString('role', role); // Store role
 
         print("Login successful: $responseData");
 
         // Return null to indicate success
         return null;
       } else {
-        return "Login failed with status code: ${response.statusCode}";
+        // Parse error message if available
+        final errorData = json.decode(response.body);
+        String errorMessage =
+            errorData['message'] ?? "Login failed. Please try again.";
+        return errorMessage;
       }
     } catch (error) {
       return "Error occurred: $error";
@@ -82,7 +96,7 @@ class LoginProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('accessToken');
     await prefs.remove('refreshToken');
-    await prefs.remove('role');  // Clear role information
+    await prefs.remove('role'); // Clear role information
     notifyListeners();
   }
 }

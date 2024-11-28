@@ -1,13 +1,13 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/View/home.dart';
-import 'package:haca_review_main/View/tab_bar.dart';
+import 'package:haca_review_main/View/sigin.dart';
 import 'package:haca_review_main/controllers/provider/signup_provider.dart';
 import 'package:haca_review_main/mobile/view/mobile_signup.dart';
 import 'package:haca_review_main/models/siginup_model.dart';
 import 'package:haca_review_main/widgets/appbar.dart';
 import 'package:haca_review_main/widgets/button.dart';
-import 'package:haca_review_main/widgets/chekbox.dart';
 import 'package:haca_review_main/widgets/imgaerow.dart';
 import 'package:haca_review_main/widgets/textField.dart';
 import 'package:provider/provider.dart';
@@ -88,9 +88,23 @@ class Siginup extends StatelessWidget {
                             const SizedBox(height: 20),
 
                             // Password field with validation
-                            Mywidgets().mytextField(
+                            TextFormField(
                               controller: signupPrvdr.passwordController,
-                              labelText: 'Password',
+                              obscureText: signupPrvdr
+                                  .obscureText, // Controlled by provider
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                border: const OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    signupPrvdr.obscureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: signupPrvdr
+                                      .togglePasswordVisibility, // Toggle through provider
+                                ),
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';
@@ -103,9 +117,13 @@ class Siginup extends StatelessWidget {
                             const SizedBox(height: 20),
 
                             // Confirm Password field with validation
-                            Mywidgets().mytextField(
+                            TextFormField(
+                              obscureText: true,
                               controller: signupPrvdr.conformPassController,
-                              labelText: 'Confirm Password',
+                              decoration: const InputDecoration(
+                                labelText: 'Confirm Password',
+                                border: OutlineInputBorder(),
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please confirm your password';
@@ -151,6 +169,7 @@ class Siginup extends StatelessWidget {
                                   if (signupError == null) {
                                     // Signup successful, show success CoolAlert
                                     CoolAlert.show(
+                                      width: 200,
                                       context: context,
                                       type: CoolAlertType.success,
                                       text: "Sign up was successful!",
@@ -182,6 +201,7 @@ class Siginup extends StatelessWidget {
                                   } else {
                                     // Signup failed, show error CoolAlert
                                     CoolAlert.show(
+                                      width: 200,
                                       context: context,
                                       type: CoolAlertType.error,
                                       text: signupError,
@@ -190,6 +210,33 @@ class Siginup extends StatelessWidget {
                                 }
                               },
                               text: 'Sign-Up',
+                            ),
+                            const SizedBox(height: 20),
+                            Center(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Already have an account? ',
+                                  style: const TextStyle(color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Sign-Ip',
+                                      style: const TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Sigin()),
+                                          );
+                                        },
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             Imgaerow().imgrow()
                           ],

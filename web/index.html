@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+  <!-- Setting base href to root for Firebase Hosting -->
+  <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
 
-  <!-- iOS meta tags & icons -->
+  <!-- Meta tags for full-screen compatibility and mobile experience -->
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- iOS Meta tags & icons -->
   <meta name="apple-mobile-web-app-title" content="haca_review_main">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
+  <!-- Web App Title -->
   <title>haca_review_main</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <!-- Firebase SDK for Analytics (Optional) -->
+  <script type="module">
+    // Import Firebase Analytics if required; otherwise, remove this section.
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFettPL-pRkneI5vqLyWcD5yV8AqgHjLE",
+      authDomain: "haca-95e97.firebaseapp.com",
+      projectId: "haca-95e97",
+      storageBucket: "haca-95e97.appspot.com",
+      messagingSenderId: "422515360756",
+      appId: "1:422515360756:web:e503dbf76dd3ff9b5c2fa1",
+      measurementId: "G-PFVBFB83MW"
+    };
+
+    // Initialize Firebase only if you’re using Analytics or additional JS SDKs outside of Flutter
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
+
+  <!-- Flutter bootstrap script -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

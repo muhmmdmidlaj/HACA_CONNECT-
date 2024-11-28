@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haca_review_main/controllers/get_access_tocken.dart';
+import 'package:haca_review_main/models/base_url.dart';
 import 'package:haca_review_main/models/user_issue_get_model.dart';
 import 'dart:convert';
 import 'dart:io'; // For handling SocketException (network error)
@@ -8,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserIssueGetProvider extends ChangeNotifier {
   Future<List<UserIssue>> fetchUserIssues() async {
-    final url = Uri.parse('http://192.168.1.211:3000/issue/userIssues');
+    final url = Uri.parse('$baseUrlll/issue/userIssues');
 
     try {
       // Retrieve the access token from SharedPreferences

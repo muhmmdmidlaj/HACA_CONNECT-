@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haca_review_main/admin/widget/admin_issue_card.dart';
 import 'package:haca_review_main/controllers/provider/admin_issue_provider.dart';
-import 'package:haca_review_main/models/issue_get_model.dart';
 import 'package:haca_review_main/widgets/diloge_builder.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
